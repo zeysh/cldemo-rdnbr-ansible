@@ -17,7 +17,7 @@ iface {{ iface }}
 
 {% endfor %}
 
-
+{% if intvars.network is defined %}
 {% for network in intvars.networks | default(()) %}
 {% for port in intvars.networks[network].ports %}
 auto {{ port }}
@@ -29,3 +29,4 @@ iface {{ network }}
     bridge-ports {{ " ".join(intvars.networks[network].ports) }}
     address {{ intvars.networks[network].ip }}
 {% endfor %}
+{% endif %}

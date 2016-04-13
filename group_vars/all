@@ -8,27 +8,43 @@ interfaces:
     leaf01:
         loopback: "10.0.0.11"
         asn: 65011
-        networks:
-            br0:
-                ip: "172.16.1.1/24"
-                ports: ["swp1"]
         neighbors:
+            swp1:
+            swp2:
+        fabric:
             swp51:
             swp52:
     leaf02:
         loopback: "10.0.0.12"
         asn: 65012
-        networks:
-            br0:
-                ip: "172.16.2.1/24"
-                ports: ["swp2"]
         neighbors:
+            swp1:
+            swp2:
+        fabric:
+            swp51:
+            swp52:
+    leaf03:
+        loopback: "10.0.0.13"
+        asn: 65012
+        neighbors:
+            swp1:
+            swp2:
+        fabric:
+            swp51:
+            swp52:
+    leaf04:
+        loopback: "10.0.0.14"
+        asn: 65012
+        neighbors:
+            swp1:
+            swp2:
+        fabric:
             swp51:
             swp52:
     spine01:
         loopback: "10.0.0.21"
         asn: 65020
-        neighbors:
+        fabric:
             swp1:
             swp2:
             swp3:
@@ -36,20 +52,40 @@ interfaces:
     spine02:
         loopback: "10.0.0.22"
         asn: 65020
-        neighbors:
+        fabric:
             swp1:
             swp2:
             swp3:
             swp4:
     server01:
+        loopback:
+            ip: "172.16.1.101"
+            mask: "255.255.255.255"
+            up: "ip route add 0.0.0.0/0 nexthop via 10.0.0.11 dev eth1 onlink nexthop via 10.0.0.12 dev eth2 onlink"
         neighbors:
             eth1:
-                ip: "172.16.1.101"
-                mask: "255.255.255.0"
-                gateway: "172.16.1.1"
-    server02:
-        neighbors:
             eth2:
-                ip: "172.16.2.101"
-                mask: "255.255.255.0"
-                gateway: "172.16.2.1"
+    server02:
+        loopback:
+            ip: "172.16.1.102"
+            mask: "255.255.255.255"
+            up: "ip route add 0.0.0.0/0 nexthop via 10.0.0.11 dev eth1 onlink nexthop via 10.0.0.12 dev eth2 onlink"
+        neighbors:
+            eth1:
+            eth2:
+    server03:
+        loopback:
+            ip: "172.16.1.103"
+            mask: "255.255.255.255"
+            up: "ip route add 0.0.0.0/0 nexthop via 10.0.0.13 dev eth1 onlink nexthop via 10.0.0.14 dev eth2 onlink"
+        neighbors:
+            eth1:
+            eth2:
+    server04:
+        loopback:
+            ip: "172.16.1.104"
+            mask: "255.255.255.255"
+            up: "ip route add 0.0.0.0/0 nexthop via 10.0.0.13 dev eth1 onlink nexthop via 10.0.0.14 dev eth2 onlink"
+        neighbors:
+            eth1:
+            eth2:
