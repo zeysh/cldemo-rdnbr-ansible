@@ -1,6 +1,7 @@
-Ansible Automation Demo
-=======================
-This demo demonstrates how to write a playbook using Ansible to configure switches running Cumulus Linux and servers running Ubuntu. This playbook configures a CLOS topology running BGP numbered in the fabric with Layer 2 bridges to the hosts, and installs a webserver on one of the hosts to serve as a Hello World example. When the demo runs successfully, any server on the network should be able to access the webserver via the BGP routes established over the fabric.
+Redistribute Neighbor Demo
+===========================
+
+This demo shows a topology using 'redistribute-neighbor' to add host reachability directly into a BGP routed fabric. Switches are Cumulus Linux and servers running Ubuntu. This playbook configures a CLOS topology running BGP unnumbered in the fabric with numbered links towards the hosts, and installs a webserver on one of the hosts to serve as a Hello World example. RDNBRd pushes the /32 host routes into the routing table when ARP messages are received from the hosts. When the demo runs successfully, any server on the network should be able to access the webserver via the BGP routes established over the fabric.
 
 This demo is written for the [cldemo-vagrant](https://github.com/cumulusnetworks/cldemo-vagrant) reference topology and applies the reference BGP unnumbered configuration from [cldemo-config-routing](https://github.com/cumulusnetworks/cldemo-config-routing).
 
@@ -9,45 +10,34 @@ Quickstart: Run the demo
 ------------------------
 (This assumes you are running Ansible 1.9.4 and Vagrant 1.8.4 on your host.)
 
+
+    ### Bring up the vagrant topology
     git clone https://github.com/cumulusnetworks/cldemo-vagrant
     cd cldemo-vagrant
     vagrant up oob-mgmt-server oob-mgmt-switch leaf01 leaf02 spine01 spine02 server01 server02
+    
+    ### setup oob mgmt server
     vagrant ssh oob-mgmt-server
     sudo su - cumulus
     sudo apt-get install software-properties-common -y
     sudo apt-add-repository ppa:ansible/ansible -y
     sudo apt-get update
     sudo apt-get install ansible -qy
+
+    ### Run the rdnbr demo
     git clone https://github.com/cumulusnetworks/cldemo-automation-ansible
     cd cldemo-automation-ansible
     ansible-playbook run-demo.yml
+
+    ### check reachability of server04 from server01
     ssh server01
-    wget 172.16.2.101
+    wget 172.16.1.104
     cat index.html
 
 
 Topology
 --------
-This demo runs on a spine-leaf topology with two single-attached hosts. Each device's management interface is connected to an out-of-band management switch and bridged with the out-of-band management server from which we run Ansible.
-
-             +------------+       +------------+
-             | spine01    |       | spine02    |
-             |            |       |            |
-             +------------+       +------------+
-             swp1 |    swp2 \   / swp1    | swp2
-                  |           X           |
-            swp51 |   swp52 /   \ swp51   | swp52
-             +------------+       +------------+
-             | leaf01     |       | leaf02     |
-             |            |       |            |
-             +------------+       +------------+
-             swp1 |                       | swp2
-                  |                       |
-             eth1 |                       | eth2
-             +------------+       +------------+
-             | server01   |       | server02   |
-             |            |       |            |
-             +------------+       +------------+
+This demo runs on a spine-leaf topology with four dual-attached hosts. Each device's management interface is connected to an out-of-band management switch and bridged with the out-of-band management server from which we run Ansible.
 
 
 Setting up the Infrastructure

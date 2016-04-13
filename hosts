@@ -1,6 +1,8 @@
 [leafs]
 leaf01
 leaf02
+leaf03
+leaf04
 
 [spines]
 spine01
@@ -9,3 +11,5 @@ spine02
 [servers]
 server01
 server02
+server03
+server04

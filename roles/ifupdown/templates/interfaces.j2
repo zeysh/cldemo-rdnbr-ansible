@@ -4,6 +4,9 @@
 
 auto lo
 iface lo inet loopback
+    address {{ intvars['loopback'].ip }}
+    netmask {{ intvars['loopback'].mask }}
+    up {{ intvars['loopback'].up }}
 
 auto eth0
 iface eth0 inet dhcp
@@ -13,8 +16,6 @@ iface eth0 inet dhcp
 {% for iface in intvars['neighbors'] %}
 auto {{ iface }}
 iface {{ iface }} inet static
-    address {{ intvars['neighbors'][iface].ip }}
-    netmask {{ intvars['neighbors'][iface].mask }}
-    up ip route add 10.0.0.0/8 via {{ intvars['neighbors'][iface].gateway }}
-    up ip route add 172.16.0.0/16 via {{ intvars['neighbors'][iface].gateway }}
+    address {{ intvars['loopback'].ip }}
+    netmask {{ intvars['loopback'].mask }}
 {% endfor %}

@@ -9,24 +9,17 @@ iface lo inet loopback
 auto eth0
 iface eth0 inet dhcp
 
-
+{% if intvars.neighbors is defined %}
 {% for iface in intvars.neighbors %}
 auto {{ iface }}
 iface {{ iface }}
     address {{ intvars.loopback }}/32
 
 {% endfor %}
-
-{% if intvars.network is defined %}
-{% for network in intvars.networks | default(()) %}
-{% for port in intvars.networks[network].ports %}
-auto {{ port }}
-iface {{ port }}
-
-{% endfor %}
-auto {{ network }}
-iface {{ network }}
-    bridge-ports {{ " ".join(intvars.networks[network].ports) }}
-    address {{ intvars.networks[network].ip }}
-{% endfor %}
 {% endif %}
+
+{% for iface in intvars.fabric %}
+auto {{ iface }}
+iface {{ iface }}
+
+{% endfor %}
