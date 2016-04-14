@@ -5,6 +5,7 @@
   become_method: sudo
   roles:
     - ifupdown2
+    - rdnbr
 #    - quagga
 - hosts: spines
   user: cumulus

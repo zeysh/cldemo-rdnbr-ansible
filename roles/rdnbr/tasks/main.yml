@@ -1,0 +1,17 @@
+# Since rdnbr is experimental, it is located in the testing apt repository.
+# This task adds the testing repo.
+- name: add cl testing repo
+  apt_repository: repo='deb http://repo.cumulusnetworks.com CumulusLinux-2.5 testing' state=present
+
+# One of the key tasks of automation are to install and configure services on
+# servers. This example installs the rdnbr package with no custom configuration
+# on the leaf switches.
+- name: install rdnbrd 
+  apt: name=python-rdnbrd update_cache=yes
+
+# If apache is not running, this starts it. Automation can be used to force a
+# a server into a consistent state - if apache crashed or stopped running for
+# any reason, this playbook will attempt to get it running again. If it's already
+# running, this step is skipped.
+- name: run rdnbrd 
+  service: name=rdnbrd state=started
