@@ -1,9 +1,4 @@
 # networking
-networks:
-    "172.16.1.0/24":
-        source: "leaf01"
-    "172.16.2.0/24":
-        source: "leaf02"
 interfaces:
     leaf01:
         loopback: "10.0.0.11"
