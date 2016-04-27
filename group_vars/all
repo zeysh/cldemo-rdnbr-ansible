@@ -58,9 +58,9 @@ interfaces:
             mask: "255.255.255.255"
         neighbors:
             eth1:
-                postup: "ip route add 10.0.0.0/8 nexthop via 10.0.0.11 dev eth1 onlink"
+                postup: "ip route replace 10.0.0.0/8 nexthop via 10.0.0.11 dev eth1 onlink nexthop via 10.0.0.12 dev eth2 onlink || ip route add 10.0.0.0/8 nexthop via 10.0.0.11 dev eth1 onlink"
             eth2:
-                postup: "ip route add 10.0.0.0/8 nexthop via 10.0.0.12 dev eth2 onlink"
+                postup: "ip route replace 10.0.0.0/8 nexthop via 10.0.0.11 dev eth1 onlink nexthop via 10.0.0.12 dev eth2 onlink || ip route add 10.0.0.0/8 nexthop via 10.0.0.12 dev eth2 onlink"
     server02:
         loopback:
             ip: "172.16.1.102"
