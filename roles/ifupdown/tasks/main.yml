@@ -5,6 +5,38 @@
 
 # This configures the interfaces and sets the default internal route to point
 # to the leafs. If the configuration changes, ifupdown will be reloaded.
-- name: configure /etc/network/interfaces on the host (using legacy ifupdown)
-  template: src=interfaces.j2 dest=/etc/network/interfaces
-  notify: reload networking legacy
+# - name: configure /etc/network/interfaces on the host (using legacy ifupdown)
+#   template: src=interfaces.j2 dest=/etc/network/interfaces
+#   notify: reload networking legacy
+
+- name: Add Default route if on server01
+  lineinfile: dest=/etc/rc.local line="ip route add default nexthop via 10.0.0.11 dev eth1 onlink nexthop via 10.0.0.12 dev eth2 onlink" insertbefore="exit 0"
+  when: "'server01' in ansible_hostname and 'nexthop via 10.0.0.11' not in default_installed.stdout"
+ 
+- name: make sure default is present on server01
+  command: ip route add default nexthop via 10.0.0.11 dev eth1 onlink nexthop via 10.0.0.12 dev eth2 onlink
+  when: "'server01' in ansible_hostname and 'nexthop via 10.0.0.11' not in default_installed.stdout"
+     
+- name: Add Default route if on server02
+  lineinfile: dest=/etc/rc.local line="ip route add default nexthop via 10.0.0.11 dev eth1 onlink nexthop via 10.0.0.12 dev eth2 onlink" insertbefore="exit 0"
+  when: "'server03' in ansible_hostname and 'nexthop via 10.0.0.11' not in default_installed.stdout"
+ 
+- name: make sure default is present on server02
+  command: ip route add default nexthop via 10.0.0.11 dev eth1 onlink nexthop via 10.0.0.12 dev eth2 onlink
+  when: "'server03' in ansible_hostname and 'nexthop via 10.0.0.11' not in default_installed.stdout"
+
+- name: Add Default route if on server03
+  lineinfile: dest=/etc/rc.local line="ip route add default nexthop via 10.0.0.13 dev eth1 onlink nexthop via 10.0.0.14 dev eth2 onlink" insertbefore="exit 0"
+  when: "'server03' in ansible_hostname and 'nexthop via 10.0.0.13' not in default_installed.stdout"
+ 
+- name: make sure default is present on server03
+  command: ip route add default nexthop via 10.0.0.13 dev eth1 onlink nexthop via 10.0.0.14 dev eth2 onlink
+  when: "'server03' in ansible_hostname and 'nexthop via 10.0.0.13' not in default_installed.stdout"
+
+- name: Add Default route if on server04
+  lineinfile: dest=/etc/rc.local line="ip route add default nexthop via 10.0.0.13 dev eth1 onlink nexthop via 10.0.0.14 dev eth2 onlink" insertbefore="exit 0"
+  when: "'server03' in ansible_hostname and 'nexthop via 10.0.0.13' not in default_installed.stdout"
+ 
+- name: make sure default is present on server04
+  command: ip route add default nexthop via 10.0.0.13 dev eth1 onlink nexthop via 10.0.0.14 dev eth2 onlink
+  when: "'server03' in ansible_hostname and 'nexthop via 10.0.0.13' not in default_installed.stdout"
