@@ -14,7 +14,7 @@ Quickstart: Run the demo
     ### Bring up the vagrant topology
     git clone https://github.com/cumulusnetworks/cldemo-vagrant
     cd cldemo-vagrant
-    vagrant up oob-mgmt-server oob-mgmt-switch leaf01 leaf02 spine01 spine02 server01 server02
+    vagrant up oob-mgmt-server oob-mgmt-switch leaf01 leaf02 leaf03 leaf04 spine01 spine02 server01 server02 server03 server04
     
     ### setup oob mgmt server
     vagrant ssh oob-mgmt-server
