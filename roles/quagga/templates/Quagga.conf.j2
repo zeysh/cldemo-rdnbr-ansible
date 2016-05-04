@@ -7,6 +7,7 @@ interface {{ neighbor }}
 !
 {% endfor %}
 {% if intvars.neighbors is defined %}
+ip import-table 10 distance 20
 {% for int in intvars.neighbors %}
 route-map rdarp permit {{loop.index}}
 match interface {{int}}
