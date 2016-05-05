@@ -28,10 +28,17 @@ Quickstart: Run the demo
     git clone https://github.com/cnidus/cldemo-rdnbr-ansible
     cd cldemo-rdnbr-ansible
     ansible-playbook run-demo.yml
+    
+    ### create traffic so that ARP entries are created on leaves for redistribute neighbour to work
+    ssh server01
+    ping 10.0.1.104
+    
+    ssh server04
+    ping 10.0.1.101
 
     ### check reachability of server04 from server01
     ssh server01
-    wget 172.16.1.104
+    wget 10.0.1.104
     cat index.html
 
 
