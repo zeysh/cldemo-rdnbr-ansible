@@ -9,11 +9,14 @@
   template: src=interfaces.j2 dest=/etc/network/interfaces
   notify: reload networking legacy
 
-# - name: force eth1 interface up
-#   command: ip link set up eth1
+- name: run the handler
+  meta: flush_handlers
 
-# - name: force eth2 interface up
-#   command: ip link set up eth2
+- name: force eth1 interface up
+  command: ifup eth1
+
+- name: force eth2 interface up
+  command: ifup eth2
 
 - name: Check if default for eth1/eth2 is installed
   shell: "ip route show"
