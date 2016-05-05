@@ -1,7 +1,7 @@
 Redistribute Neighbor Demo
 ===========================
 
-This demo shows a topology using 'redistribute-neighbor' to add host reachability directly into a BGP routed fabric. Switches are Cumulus Linux and servers running Ubuntu. This playbook configures a CLOS topology running BGP unnumbered in the fabric with numbered links towards the hosts, and installs a webserver on one of the hosts to serve as a Hello World example. RDNBRd pushes the /32 host routes into the routing table when ARP messages are received from the hosts. When the demo runs successfully, any server on the network should be able to access the webserver via the BGP routes established over the fabric.
+This demo shows a topology using 'redistribute-neighbor' to add host reachability directly into a BGP routed fabric. Switches are Cumulus Linux and servers running Ubuntu. This playbook initialized a CLOS topology running BGP unnumbered in the fabric with numbered links towards the hosts, and installs a webserver on one of the hosts to serve as a Hello World. The playbook then configures Redistribute Neighbor (Rd-Nbr). Rd-Nbr pushes /32 host routes into the routing table when ARP messages are received from the hosts. When the demo runs successfully, any server on the network should be able to access the webserver (on server04) via the BGP routes established over the fabric.
 
 This demo is written for the [cldemo-vagrant](https://github.com/cumulusnetworks/cldemo-vagrant) reference topology and applies the reference BGP unnumbered configuration from [cldemo-config-routing](https://github.com/cumulusnetworks/cldemo-config-routing).
 
